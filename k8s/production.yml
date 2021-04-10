@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: melitix
+  name: launch-site
+  labels:
+    app: launch-site
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: launch-site
+  template:
+    metadata:
+      labels:
+        app: launch-site
+    spec:
+      containers:
+      - name: site
+        image: "ghcr.io/melitix/launch-site:latest"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: melitix
+  name: launch-site
+  labels:
+    app: launch-site
+spec:
+  type: ClusterIP
+  selector:
+    app: launch-site
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: melitix
+  name: launch-site
+  labels:
+    app: launch-site
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - melitix.com
+    - www.melitix.com
+    - melitix.events
+    - eventhunt.org
+    secretName: launch-site-tls
+  rules:
+  - host: melitix.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: launch-site
+            port:
+              number: 80
+  - host: www.melitix.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: launch-site
+            port:
+              number: 80
+  - host: eventhunt.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: launch-site
+            port:
+              number: 80
