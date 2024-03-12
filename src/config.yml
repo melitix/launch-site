@@ -5,7 +5,7 @@ paginate: 3
 
 theme: "hugo-theme-lean-launch-page"
 
-googleAnalytics: ""
+googleAnalytics: "G-GR639DK1WC"
 
 params:
   tagline: "A modern events platform coming soon"
