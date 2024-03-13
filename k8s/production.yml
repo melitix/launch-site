@@ -53,7 +53,6 @@ spec:
     - melitix.com
     - www.melitix.com
     - melitix.events
-    - eventhunt.org
     secretName: launch-site-tls
   rules:
   - host: melitix.com
@@ -67,16 +66,6 @@ spec:
             port:
               number: 80
   - host: www.melitix.com
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: launch-site
-            port:
-              number: 80
-  - host: eventhunt.org
     http:
       paths:
       - pathType: Prefix
