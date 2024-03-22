@@ -5,7 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/main.css">
 	<link href="https://fonts.googleapis.com/css?family=Nunito|Open+Sans" rel="stylesheet">
-	<link rel="stylesheet" href="vendor/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="vendor/font-awesome-6.5/css/fontawesome.min.css">
+	<link rel="stylesheet" href="vendor/font-awesome-6.5/css/brands.min.css">
+	<link rel="stylesheet" href="vendor/font-awesome-6.5/css/solid.min.css">
 	{{ template "_internal/google_analytics.html" . }}
 {{ $directory := "themes/hugo-theme-lean-launch-page/static/" }}
 {{ $filename := "favicon.png" }}
@@ -21,12 +23,12 @@
 	<img class="logo" src="favicon.png" alt="Logo" />
 {{ end }}
 	<ul class="social-icons">
-		{{ if isset .Site.Params "twitter" }}<li><a href="{{ .Site.Params.twitter }}"><i class="fa fa-twitter"></i></a></li>{{ end }}
-		{{ if isset .Site.Params "facebook" }}<li><a href="{{ .Site.Params.facebook }}"><i class="fa fa-facebook"></i></a></li>{{ end }}
-		{{ if isset .Site.Params "instagram" }}<li><a href="{{ .Site.Params.instagram }}"><i class="fa fa-instagram"></i></a></li>{{ end }}
-		{{ if isset .Site.Params "youtube" }}<li><a href="{{ .Site.Params.youtube }}"><i class="fa fa-youtube"></i></a></li>{{ end }}
-		{{ if isset .Site.Params "linkedin" }}<li><a href="{{ .Site.Params.linkedin }}"><i class="fa fa-linkedin"></i></a></li>{{ end }}
-		{{ if isset .Site.Params "github" }}<li><a href="{{ .Site.Params.github }}"><i class="fa fa-github"></i></a></li>{{ end }}
+		{{ if isset .Site.Params "mastodon" }}<li><a href="{{ .Site.Params.mastodon }}"><i class="fa-brands fa-mastodon"></i></a></li>{{ end }}
+		{{ if isset .Site.Params "facebook" }}<li><a href="{{ .Site.Params.facebook }}"><i class="fa-brands fa-facebook"></i></a></li>{{ end }}
+		{{ if isset .Site.Params "instagram" }}<li><a href="{{ .Site.Params.instagram }}"><i class="fa-brands fa-instagram"></i></a></li>{{ end }}
+		{{ if isset .Site.Params "youtube" }}<li><a href="{{ .Site.Params.youtube }}"><i class="fa-brands fa-youtube"></i></a></li>{{ end }}
+		{{ if isset .Site.Params "linkedin" }}<li><a href="{{ .Site.Params.linkedin }}"><i class="fa-brands fa-linkedin"></i></a></li>{{ end }}
+		{{ if isset .Site.Params "github" }}<li><a href="{{ .Site.Params.github }}"><i class="fa-brands fa-github"></i></a></li>{{ end }}
 	</ul>
 	{{ block "main" . }}
 	{{ end }}
@@ -34,14 +36,12 @@
 	<p>{{ .Site.Params.tagline }}</p>
 	{{ if isset .Site.Params "mailchimpurl" }}{{ partial "mailchimp-signup" . }}{{ end }}
 	<div id="benefits">
-		{{ range where .Site.Pages "Section" "benefits" }}
-		{{ if in .Path ".md" }}
+		{{ range where .Site.RegularPages "Section" "benefits" }}
 			<div>
-				<h2><i class="fa {{ .Params.icon }}"></i>{{ .Title }}</h2>
+				<h2><i class="{{ .Params.icon }}"></i>{{ .Title }}</h2>
 				{{ .Content }}
 			</div>
 		{{ end }}
-	{{ end }}
 	</div>
 </body>
 </html>
